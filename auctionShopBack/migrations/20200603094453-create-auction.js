@@ -8,13 +8,13 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      bid_id: {
-        allowNull: true,
-        type: Sequelize.INTEGER,
-      },
       user_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
+        eferences: {
+          model: "users",
+          key: "user_id",
+        },
       },
       minimum_bid: {
         allowNull: false,

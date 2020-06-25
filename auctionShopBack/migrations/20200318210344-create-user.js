@@ -21,18 +21,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      review_id: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
-      auction_id: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
-      bid_id: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

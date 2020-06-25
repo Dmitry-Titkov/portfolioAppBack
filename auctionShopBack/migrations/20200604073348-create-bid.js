@@ -11,10 +11,18 @@ module.exports = {
       auction_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
+        eferences: {
+          model: "auctions",
+          key: "auction_id",
+        },
       },
       user_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
+        eferences: {
+          model: "users",
+          key: "user_id",
+        },
       },
       amount: {
         allowNull: false,
