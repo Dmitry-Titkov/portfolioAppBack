@@ -25,30 +25,21 @@ if (process.env.DELAY) {
 const authMiddleWare = require("./auth/middleware");
 
 app.get("/", async (req, res) => {
-  res.json(await query.artList());
+  res.json(await query.auctionList());
 });
 
-app.patch("/artworks/:id/hearts", async (req, res) => {
-  const row = await query.retrieveArtwork(req.params.id);
-  const amount = await query.likeArtwork(row.id);
-  res.json({
-    hearts: amount,
-  });
-});
-
-app.post("/artworks", authMiddleware, async (req, res) => {
+app.post("/auctions", authMiddleware, async (req, res) => {
   console.log("it works");
 });
 
-app.post("/artworks/:id/bid", authMiddleware, async (req, res) => {
+app.post("/auctions/:id/bid", authMiddleware, async (req, res) => {
   const id = req.params.id;
-  const email = req.body.email;
   const amount = req.body.amount;
-  const createdBid = await query.createBid(id, email, amount);
+  const userId = req.body.userId;
+  const createdBid = await query.createBid(id, userId, amount);
   res.json(createdBid);
 });
 
-// POST endpoint for testing purposes, can be removed
 app.post("/echo", (req, res) => {
   res.json({
     youPosted: {
@@ -57,11 +48,8 @@ app.post("/echo", (req, res) => {
   });
 });
 
-// POST endpoint which requires a token for testing purposes, can be removed
 app.post("/authorized_post_request", authMiddleWare, (req, res) => {
-  // accessing user that was added to req by the auth middleware
   const user = req.user;
-  // don't send back the password hash
   delete user.dataValues["password"];
 
   res.json({
@@ -77,7 +65,6 @@ app.post("/authorized_post_request", authMiddleWare, (req, res) => {
 const authRouter = require("./routers/auth");
 app.use("/", authRouter);
 
-// Listen for connections on specified port (default is port 4000)
 const { PORT } = require("./config/constants");
 
 app.listen(PORT, () => {

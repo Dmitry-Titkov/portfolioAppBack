@@ -42,7 +42,7 @@ async function retrieveAuction(id) {
 }
 module.exports.retrieveAuction = retrieveAuction;
 
-async function createBid(chosenAuctionId, newAmount) {
+async function createBid(chosenAuctionId, newAmount, userId) {
   try {
     const auction = await retrieveAuction(chosenAuctionId);
     const amounts = auction.bids.map((element) => {
@@ -55,6 +55,7 @@ async function createBid(chosenAuctionId, newAmount) {
       const newBid = await BidModel.create({
         auctionId: chosenAuctionId,
         amount: newAmount,
+        userId: userId,
       });
       return newBid;
     }
