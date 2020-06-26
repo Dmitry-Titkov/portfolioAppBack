@@ -1,7 +1,7 @@
-const ArtworkModel = require("./models").artwork;
+const AuctionModel = require("./models").auction;
 const BidModel = require("./models").bid;
 
-async function artList() {
+async function auctionList() {
   try {
     const criteria = {
       include: [
@@ -12,21 +12,21 @@ async function artList() {
       ],
     };
 
-    const rows = await ArtworkModel.findAll(criteria);
+    const rows = await AuctionModel.findAll(criteria);
 
-    const plainArt = rows.map((element) => {
+    const listOfAuctions = rows.map((element) => {
       return element.get({ plain: true });
     });
-    return plainArt;
+    return listOfAuctions;
   } catch (e) {
     console.error(e);
   }
 }
-module.exports.artList = artList;
+module.exports.auctionList = auctionList;
 
-async function retrieveArtwork(id) {
+async function retrieveAuction(id) {
   try {
-    const row = await ArtworkModel.findByPk(id, {
+    const row = await AuctionModel.findByPk(id, {
       include: [
         {
           model: BidModel,
@@ -40,32 +40,20 @@ async function retrieveArtwork(id) {
     console.error(e);
   }
 }
-module.exports.retrieveArtwork = retrieveArtwork;
+module.exports.retrieveAuction = retrieveAuction;
 
-async function likeArtwork(id) {
+async function createBid(chosenAuctionId, newAmount) {
   try {
-    const row = await ArtworkModel.findByPk(id);
-    const incrementResult = await row.increment("likes");
-    return incrementResult.likes;
-  } catch (e) {
-    console.error(e);
-  }
-}
-module.exports.likeArtwork = likeArtwork;
-
-async function createBid(chosenArtworkId, newEmail, newAmount) {
-  try {
-    const artwork = await retrieveArtwork(chosenArtworkId);
+    const auction = await retrieveAuction(chosenAuctionId);
     const amounts = artwork.bids.map((element) => {
       return element.amount;
     });
-    const highestAmount = Math.max(0, artwork.minimumBid, ...amounts);
+    const highestAmount = Math.max(0, artwork.minimum_bid, ...amounts);
     if (newAmount <= highestAmount) {
       console.error("the value is too small");
     } else {
       const newBid = await BidModel.create({
-        artworkId: chosenArtworkId,
-        email: newEmail,
+        auction_id: chosenAuctionId,
         amount: newAmount,
       });
       return newBid;
