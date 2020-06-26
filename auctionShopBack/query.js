@@ -1,7 +1,7 @@
 const AuctionModel = require("./models").auction;
 const BidModel = require("./models").bid;
 
-async function artList() {
+async function itemList() {
   try {
     const criteria = {
       include: [
@@ -22,9 +22,9 @@ async function artList() {
     console.error(e);
   }
 }
-module.exports.artList = artList;
+module.exports.itemList = itemList;
 
-async function retrieveArtwork(id) {
+async function retrieveAuction(id) {
   try {
     const row = await AuctionModel.findByPk(id, {
       include: [
@@ -40,32 +40,20 @@ async function retrieveArtwork(id) {
     console.error(e);
   }
 }
-module.exports.retrieveArtwork = retrieveArtwork;
+module.exports.retrieveAuction = retrieveAuction;
 
-async function likeArtwork(id) {
+async function createBid(chosenAuctionId, newAmount) {
   try {
-    const row = await AuctionModel.findByPk(id);
-    const incrementResult = await row.increment("likes");
-    return incrementResult.likes;
-  } catch (e) {
-    console.error(e);
-  }
-}
-module.exports.likeArtwork = likeArtwork;
-
-async function createBid(chosenArtworkId, newEmail, newAmount) {
-  try {
-    const artwork = await retrieveArtwork(chosenArtworkId);
-    const amounts = artwork.bids.map((element) => {
+    const auction = await retrieveAuction(chosenAuctionId);
+    const amounts = auction.bids.map((element) => {
       return element.amount;
     });
-    const highestAmount = Math.max(0, artwork.minimumBid, ...amounts);
+    const highestAmount = Math.max(0, auction.minimumBid, ...amounts);
     if (newAmount <= highestAmount) {
       console.error("the value is too small");
     } else {
       const newBid = await BidModel.create({
-        artworkId: chosenArtworkId,
-        email: newEmail,
+        auctionId: chosenAuctionId,
         amount: newAmount,
       });
       return newBid;
