@@ -1,7 +1,7 @@
 const AuctionModel = require("./models").auction;
 const BidModel = require("./models").bid;
 
-async function auctionList() {
+async function artList() {
   try {
     const criteria = {
       include: [
@@ -14,17 +14,17 @@ async function auctionList() {
 
     const rows = await AuctionModel.findAll(criteria);
 
-    const listOfAuctions = rows.map((element) => {
+    const plainArt = rows.map((element) => {
       return element.get({ plain: true });
     });
-    return listOfAuctions;
+    return plainArt;
   } catch (e) {
     console.error(e);
   }
 }
-module.exports.auctionList = auctionList;
+module.exports.artList = artList;
 
-async function retrieveAuction(id) {
+async function retrieveArtwork(id) {
   try {
     const row = await AuctionModel.findByPk(id, {
       include: [
@@ -40,20 +40,32 @@ async function retrieveAuction(id) {
     console.error(e);
   }
 }
-module.exports.retrieveAuction = retrieveAuction;
+module.exports.retrieveArtwork = retrieveArtwork;
 
-async function createBid(chosenAuctionId, newAmount) {
+async function likeArtwork(id) {
   try {
-    const auction = await retrieveAuction(chosenAuctionId);
+    const row = await AuctionModel.findByPk(id);
+    const incrementResult = await row.increment("likes");
+    return incrementResult.likes;
+  } catch (e) {
+    console.error(e);
+  }
+}
+module.exports.likeArtwork = likeArtwork;
+
+async function createBid(chosenArtworkId, newEmail, newAmount) {
+  try {
+    const artwork = await retrieveArtwork(chosenArtworkId);
     const amounts = artwork.bids.map((element) => {
       return element.amount;
     });
-    const highestAmount = Math.max(0, artwork.minimum_bid, ...amounts);
+    const highestAmount = Math.max(0, artwork.minimumBid, ...amounts);
     if (newAmount <= highestAmount) {
       console.error("the value is too small");
     } else {
       const newBid = await BidModel.create({
-        auction_id: chosenAuctionId,
+        artworkId: chosenArtworkId,
+        email: newEmail,
         amount: newAmount,
       });
       return newBid;

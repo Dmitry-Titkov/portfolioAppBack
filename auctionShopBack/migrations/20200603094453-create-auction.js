@@ -1,28 +1,24 @@
 "use strict";
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable("auction", {
-      auction_id: {
+    return queryInterface.createTable("auctions", {
+      id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      user_id: {
+      userId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         eferences: {
           model: "users",
-          key: "user_id",
+          key: "id",
         },
       },
       minimum_bid: {
         allowNull: false,
         type: Sequelize.INTEGER,
-      },
-      date_placed: {
-        allowNull: false,
-        type: Sequelize.DATE,
       },
       date_end: {
         allowNull: false,
@@ -47,6 +43,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable("auction");
+    return queryInterface.dropTable("auctions");
   },
 };

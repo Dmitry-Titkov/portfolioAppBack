@@ -2,26 +2,26 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable("bids", {
-      bid_id: {
+      id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      auction_id: {
+      auctionId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         eferences: {
           model: "auctions",
-          key: "auction_id",
+          key: "id",
         },
       },
-      user_id: {
+      userId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         eferences: {
           model: "users",
-          key: "user_id",
+          key: "id",
         },
       },
       amount: {

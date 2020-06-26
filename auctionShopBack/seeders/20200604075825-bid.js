@@ -6,9 +6,9 @@ module.exports = {
       "bids",
       [
         {
-          bid_id: 1,
-          auction_id: 1,
-          user_id: 1,
+          id: 1,
+          auctionId: 1,
+          userId: 1,
           amount: 100,
           createdAt: new Date(),
           updatedAt: new Date(),
