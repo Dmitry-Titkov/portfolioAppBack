@@ -25,7 +25,7 @@ if (process.env.DELAY) {
 const authMiddleWare = require("./auth/middleware");
 
 app.get("/", async (req, res) => {
-  res.json(await query.auctionList());
+  res.json(await query.itemList());
 });
 
 app.post("/auctions", authMiddleware, async (req, res) => {
@@ -38,6 +38,24 @@ app.post("/auctions/:id/bid", authMiddleware, async (req, res) => {
   const userId = req.body.userId;
   const createdBid = await query.createBid(id, userId, amount);
   res.json(createdBid);
+});
+
+app.post("/auctions/:id/create", authMiddleware, async (req, res) => {
+  const minimumBid = req.body.minimum;
+  const userId = req.body.id;
+  const name = req.body.name;
+  const image = req.body.image;
+  const description = req.body.description;
+  const end_date = req.body.end;
+  const createAuction = await query.createAuction(
+    userId,
+    name,
+    description,
+    image,
+    minimumBid,
+    end_date
+  );
+  res.json(createAuction);
 });
 
 app.post("/echo", (req, res) => {

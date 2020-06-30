@@ -16,6 +16,10 @@ module.exports = {
           key: "id",
         },
       },
+      name: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
       minimum_bid: {
         allowNull: false,
         type: Sequelize.INTEGER,

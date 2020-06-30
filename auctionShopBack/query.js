@@ -65,3 +65,24 @@ async function createBid(chosenAuctionId, newAmount, userId) {
 }
 
 module.exports.createBid = createBid;
+
+async function createAuction(
+  userId,
+  newName,
+  newDewscription,
+  newImage,
+  newMinimum,
+  newEnd
+) {
+  const newAuction = await AuctionModel.create({
+    userId: userId,
+    name: newName,
+    minimum_bid: newMinimum,
+    date_end: newEnd,
+    description: newDewscription,
+    image: newImage,
+  });
+  return newAuction;
+}
+
+module.exports.createAuction = createAuction;

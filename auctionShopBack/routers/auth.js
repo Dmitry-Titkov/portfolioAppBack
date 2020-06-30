@@ -21,7 +21,7 @@ router.post("/login", async (req, res, next) => {
 
     if (!user || !bcrypt.compareSync(password, user.password)) {
       return res.status(400).send({
-        message: "User with that email not found or password incorrect",
+        message: "E-mail or password incorect",
       });
     }
 
@@ -35,17 +35,18 @@ router.post("/login", async (req, res, next) => {
 });
 
 router.post("/signup", async (req, res) => {
-  const { email, password, name, isArtist } = req.body;
-  if (!email || !password || !name) {
-    return res.status(400).send("Please provide an email, password and a name");
+  const { email, password, firstName, lastName, phoneNumber } = req.body;
+  if (!email || !password || !firstName || lastName || phoneNumber) {
+    return res.status(400).send("Please fill in all ");
   }
 
   try {
     const newUser = await User.create({
+      firstName,
+      lastName,
       email,
+      phoneNumber,
       password: bcrypt.hashSync(password, SALT_ROUNDS),
-      name,
-      isArtist,
     });
 
     delete newUser.dataValues["password"];

@@ -8,6 +8,7 @@ module.exports = {
         {
           id: 1,
           userId: 1,
+          name: "Chia",
           minimum_bid: 1,
           description: "Woah",
           date_end: new Date(),
