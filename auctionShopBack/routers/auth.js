@@ -35,8 +35,8 @@ router.post("/login", async (req, res, next) => {
 });
 
 router.post("/signup", async (req, res) => {
-  const { email, password, firstName, lastName, phoneNumber } = req.body;
-  if (!email || !password || !firstName || lastName || phoneNumber) {
+  const { email, password, displayName } = req.body;
+  if (!email || !password || !displayName) {
     return res.status(400).send("Please fill in all ");
   }
 

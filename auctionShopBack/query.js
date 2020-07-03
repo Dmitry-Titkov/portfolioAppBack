@@ -1,5 +1,7 @@
 const AuctionModel = require("./models").auction;
 const BidModel = require("./models").bid;
+const UserModel = require("./models").user;
+const ReviewModel = require("./models").review;
 
 async function itemList() {
   try {
@@ -23,6 +25,27 @@ async function itemList() {
   }
 }
 module.exports.itemList = itemList;
+
+async function retrieveUser(id) {
+  try {
+    const row = await UserModel.findByPk(id, {
+      include: [
+        {
+          model: AuctionModel,
+          as: "auctions",
+          model: ReviewModel,
+          as: "reviews",
+        },
+      ],
+    });
+
+    return row.get({ plain: true });
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+module.exports.retrieveUser = retrieveUser;
 
 async function retrieveAuction(id) {
   try {

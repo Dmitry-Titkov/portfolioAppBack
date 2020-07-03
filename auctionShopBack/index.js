@@ -28,6 +28,10 @@ app.get("/", async (req, res) => {
   res.json(await query.itemList());
 });
 
+app.get("/user/:id", async (req, res) => {
+  res.json(await query.retrieveUser(req.params.id));
+});
+
 app.post("/auctions", authMiddleware, async (req, res) => {
   console.log("it works");
 });
@@ -42,7 +46,7 @@ app.post("/auctions/:id/bid", authMiddleware, async (req, res) => {
 
 app.post("/auctions/:id/create", authMiddleware, async (req, res) => {
   const minimumBid = req.body.minimum;
-  const userId = req.body.id;
+  const userId = req.params.id;
   const name = req.body.name;
   const image = req.body.image;
   const description = req.body.description;
