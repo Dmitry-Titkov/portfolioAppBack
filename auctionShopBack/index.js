@@ -45,19 +45,19 @@ app.post("/auctions/:id/bid", authMiddleware, async (req, res) => {
 });
 
 app.post("/auctions/:id/create", authMiddleware, async (req, res) => {
-  const minimumBid = req.body.minimum;
+  const minimumBid = req.body.minimumBid;
   const userId = req.params.id;
   const name = req.body.name;
   const image = req.body.image;
   const description = req.body.description;
-  const end_date = req.body.end;
+  const date_end = req.body.date_end;
   const createAuction = await query.createAuction(
     userId,
     name,
     description,
     image,
     minimumBid,
-    end_date
+    date_end
   );
   res.json(createAuction);
 });
