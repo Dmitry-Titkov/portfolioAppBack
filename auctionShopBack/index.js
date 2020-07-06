@@ -37,10 +37,10 @@ app.post("/auctions", authMiddleware, async (req, res) => {
 });
 
 app.post("/auctions/:id/bid", authMiddleware, async (req, res) => {
-  const id = req.params.id;
-  const amount = req.body.amount;
+  const chosenAuctionId = req.params.id;
+  const amount = req.body.newAmount;
   const userId = req.body.userId;
-  const createdBid = await query.createBid(id, userId, amount);
+  const createdBid = await query.createBid(chosenAuctionId, amount, userId);
   res.json(createdBid);
 });
 
