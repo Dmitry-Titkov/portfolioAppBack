@@ -78,19 +78,10 @@ async function retrieveItem(name) {
         [Op.like]: "%" + name + "%",
       },
     },
+    include: BidModel,
   };
-  console.log("OPTIONS", options);
   try {
     const rows = await AuctionModel.findAll(options);
-    console.log("ROW", rows);
-
-    // const row = await AuctionModel.findAll(options);
-    // console.log("ROW", row);
-
-    // return row.map((element) => {
-    //   return element.datavalues;
-    // });
-
     return rows.map((element) => {
       return element.get({ plain: true });
     });
