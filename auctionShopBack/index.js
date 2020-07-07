@@ -40,6 +40,11 @@ app.post("/auctions", authMiddleware, async (req, res) => {
   console.log("it works");
 });
 
+app.get("/search/:name", async (req, res) => {
+  console.log("hello", req.params.name);
+  res.json(await query.retrieveItem(req.params.name));
+});
+
 app.post("/auctions/:id/bid", authMiddleware, async (req, res) => {
   const chosenAuctionId = req.params.id;
   const amount = req.body.newAmount;

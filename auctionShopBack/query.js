@@ -2,6 +2,7 @@ const AuctionModel = require("./models").auction;
 const BidModel = require("./models").bid;
 const UserModel = require("./models").user;
 const ReviewModel = require("./models").review;
+const { Op } = require("sequelize");
 
 async function itemListBids() {
   try {
@@ -70,6 +71,36 @@ async function retrieveUser(id) {
 
 module.exports.retrieveUser = retrieveUser;
 
+async function retrieveItem(name) {
+  var options = {
+    where: {
+      name: {
+        [Op.like]: "%" + name + "%",
+      },
+    },
+  };
+  console.log("OPTIONS", options);
+  try {
+    const rows = await AuctionModel.findAll(options);
+    console.log("ROW", rows);
+
+    // const row = await AuctionModel.findAll(options);
+    // console.log("ROW", row);
+
+    // return row.map((element) => {
+    //   return element.datavalues;
+    // });
+
+    return rows.map((element) => {
+      return element.get({ plain: true });
+    });
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+module.exports.retrieveItem = retrieveItem;
+
 async function retrieveAuction(id) {
   try {
     const row = await AuctionModel.findByPk(id, {
@@ -120,15 +151,19 @@ async function createAuction(
   newMinimum,
   newEnd
 ) {
-  const newAuction = await AuctionModel.create({
-    userId: userId,
-    name: newName,
-    minimum_bid: newMinimum,
-    date_end: newEnd,
-    description: newDewscription,
-    image: newImage,
-  });
-  return newAuction;
+  try {
+    const newAuction = await AuctionModel.create({
+      userId: userId,
+      name: newName,
+      minimum_bid: newMinimum,
+      date_end: newEnd,
+      description: newDewscription,
+      image: newImage,
+    });
+    return newAuction;
+  } catch (e) {
+    console.error(e);
+  }
 }
 
 module.exports.createAuction = createAuction;
