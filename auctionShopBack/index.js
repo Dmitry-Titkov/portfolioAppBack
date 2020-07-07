@@ -25,7 +25,11 @@ if (process.env.DELAY) {
 const authMiddleWare = require("./auth/middleware");
 
 app.get("/", async (req, res) => {
-  res.json(await query.itemList());
+  res.json(await query.itemListBids());
+});
+
+app.get("/review", async (req, res) => {
+  res.json(await query.itemListReviews());
 });
 
 app.get("/user/:id", async (req, res) => {
@@ -42,6 +46,20 @@ app.post("/auctions/:id/bid", authMiddleware, async (req, res) => {
   const userId = req.body.userId;
   const createdBid = await query.createBid(chosenAuctionId, amount, userId);
   res.json(createdBid);
+});
+
+app.post("/auctions/:id/review", authMiddleware, async (req, res) => {
+  const auctionId = req.params.id;
+  const rating = req.body.rating;
+  const comment = req.body.comment;
+  const userId = req.body.userId;
+  const createdBid = await query.createReview(
+    auctionId,
+    rating,
+    comment,
+    userId
+  );
+  res.json(createReview);
 });
 
 app.post("/auctions/:id/create", authMiddleware, async (req, res) => {

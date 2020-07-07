@@ -7,7 +7,8 @@ module.exports = {
       [
         {
           id: 1,
-          userId: 1,
+          userId: 2,
+          auctionId: 1,
           rating: 5,
           comment: "Amazing",
           createdAt: new Date(),

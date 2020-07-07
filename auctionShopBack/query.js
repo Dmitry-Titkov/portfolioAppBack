@@ -3,7 +3,7 @@ const BidModel = require("./models").bid;
 const UserModel = require("./models").user;
 const ReviewModel = require("./models").review;
 
-async function itemList() {
+async function itemListBids() {
   try {
     const criteria = {
       include: [
@@ -24,7 +24,30 @@ async function itemList() {
     console.error(e);
   }
 }
-module.exports.itemList = itemList;
+module.exports.itemListBids = itemListBids;
+
+async function itemListReviews() {
+  try {
+    const criteria = {
+      include: [
+        {
+          model: ReviewModel,
+          as: "reviews",
+        },
+      ],
+    };
+
+    const rows = await AuctionModel.findAll(criteria);
+
+    const plainArt = rows.map((element) => {
+      return element.get({ plain: true });
+    });
+    return plainArt;
+  } catch (e) {
+    console.error(e);
+  }
+}
+module.exports.itemListReviews = itemListReviews;
 
 async function retrieveUser(id) {
   try {
@@ -109,3 +132,15 @@ async function createAuction(
 }
 
 module.exports.createAuction = createAuction;
+
+async function createReview(userId, auctionId, rating, comment) {
+  const newReview = await ReviewModel.create({
+    userId: userId,
+    auctionId,
+    rating: rating,
+    comment: comment,
+  });
+  return newReview;
+}
+
+module.exports.createReview = createReview;

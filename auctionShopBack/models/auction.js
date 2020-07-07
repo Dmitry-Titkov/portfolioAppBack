@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
   AuctionModel.associate = (models) => {
     AuctionModel.belongsTo(models.user);
     AuctionModel.hasMany(models.bid);
+    AuctionModel.hasMany(models.review);
   };
   return AuctionModel;
 };

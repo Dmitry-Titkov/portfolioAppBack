@@ -16,6 +16,14 @@ module.exports = {
           key: "id",
         },
       },
+      auctionId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: "auctions",
+          key: "id",
+        },
+      },
       rating: {
         type: Sequelize.INTEGER,
       },
