@@ -57,9 +57,9 @@ async function retrieveUser(id) {
         {
           model: AuctionModel,
           as: "auctions",
-          model: ReviewModel,
-          as: "reviews",
         },
+        { model: ReviewModel, as: "reviews" },
+        { model: BidModel, as: "bids" },
       ],
     });
 
