@@ -71,6 +71,21 @@ async function retrieveUser(id) {
 
 module.exports.retrieveUser = retrieveUser;
 
+async function checkUsers() {
+  try {
+    const row = await UserModel.findAll();
+
+    const users = row.map((element) => {
+      return element.get({ plain: true });
+    });
+    return users;
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+module.exports.checkUsers = checkUsers;
+
 async function retrieveItem(name) {
   var options = {
     where: {
@@ -159,14 +174,18 @@ async function createAuction(
 
 module.exports.createAuction = createAuction;
 
-async function createReview(userId, auctionId, rating, comment) {
-  const newReview = await ReviewModel.create({
-    userId: userId,
-    auctionId,
-    rating: rating,
-    comment: comment,
-  });
-  return newReview;
+async function createReview(auctionId, rating, comment, userId) {
+  try {
+    const newReview = await ReviewModel.create({
+      userId: userId,
+      auctionId: auctionId,
+      rating: rating,
+      comment: comment,
+    });
+    return newReview;
+  } catch (e) {
+    console.error(e);
+  }
 }
 
 module.exports.createReview = createReview;

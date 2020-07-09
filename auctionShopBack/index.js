@@ -36,12 +36,15 @@ app.get("/user/:id", async (req, res) => {
   res.json(await query.retrieveUser(req.params.id));
 });
 
+app.get("/user", async (req, res) => {
+  res.json(await query.checkUsers());
+});
+
 app.post("/auctions", authMiddleware, async (req, res) => {
   console.log("it works");
 });
 
 app.get("/search/:name", async (req, res) => {
-  console.log("hello", req.params.name);
   res.json(await query.retrieveItem(req.params.name));
 });
 
@@ -58,7 +61,7 @@ app.post("/auctions/:id/review", authMiddleware, async (req, res) => {
   const rating = req.body.rating;
   const comment = req.body.comment;
   const userId = req.body.userId;
-  const createdBid = await query.createReview(
+  const createReview = await query.createReview(
     auctionId,
     rating,
     comment,
