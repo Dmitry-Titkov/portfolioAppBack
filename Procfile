@@ -1,1 +1,1 @@
-release: bash post-release.sh
+release: bash post-release.shgit
