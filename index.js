@@ -1,8 +1,8 @@
 const express = require("express");
-var cors = require("cors");
+const cors = require("cors");
 const query = require("./query");
 const authMiddleware = require("./auth/middleware");
-
+const { PORT } = require("./config/constants");
 const app = express();
 
 app.use(cors());
@@ -112,8 +112,6 @@ app.post("/authorized_post_request", authMiddleWare, (req, res) => {
 
 const authRouter = require("./routers/auth");
 app.use("/", authRouter);
-
-const { PORT } = require("./config/constants");
 
 app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`);
