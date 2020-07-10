@@ -113,8 +113,8 @@ app.post("/authorized_post_request", authMiddleWare, (req, res) => {
 const authRouter = require("./routers/auth");
 app.use("/", authRouter);
 
-// const { PORT } = require("./config/constants");
+const { PORT } = require("./config/constants");
 
-// app.listen(PORT, () => {
-//   console.log(`Listening on port: ${PORT}`);
-// });
+app.listen(PORT, () => {
+  console.log(`Listening on port: ${PORT}`);
+});
