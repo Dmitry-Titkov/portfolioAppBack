@@ -36,6 +36,10 @@ app.get("/user/:id", async (req, res) => {
   res.json(await query.retrieveUser(req.params.id));
 });
 
+app.get("/user/:auctionId", async (req, res) => {
+  res.json(await query.UsersAuctions(req.params.auctionId));
+});
+
 app.get("/user", async (req, res) => {
   res.json(await query.checkUsers());
 });

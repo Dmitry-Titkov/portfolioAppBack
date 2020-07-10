@@ -86,6 +86,25 @@ async function checkUsers() {
 
 module.exports.checkUsers = checkUsers;
 
+async function UsersAuctions(id) {
+  try {
+    const row = await UserModel.findByPk(id, {
+      include: [
+        {
+          model: AuctionModel,
+          as: "auctions",
+        },
+      ],
+    });
+
+    return row.get({ plain: true });
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+module.exports.UsersAuctions = UsersAuctions;
+
 async function retrieveItem(name) {
   var options = {
     where: {
