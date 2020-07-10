@@ -12,10 +12,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      auctionId: {
-        allowNull: true,
-        type: Sequelize.INTEGER,
-      },
       email: {
         type: Sequelize.STRING,
         unique: true,
