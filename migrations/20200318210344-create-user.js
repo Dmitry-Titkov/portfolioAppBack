@@ -12,6 +12,14 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      auctionId: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+          model: "auctions",
+          key: "id",
+        },
+      },
       email: {
         type: Sequelize.STRING,
         unique: true,
