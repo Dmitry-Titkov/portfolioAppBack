@@ -179,7 +179,7 @@ async function createAuction(
   try {
     const newAuction = await AuctionModel.create({
       userId: userId,
-      name: newName,
+      name: newName.toLowerCase(),
       minimum_bid: newMinimum,
       date_end: newEnd,
       description: newDewscription,
