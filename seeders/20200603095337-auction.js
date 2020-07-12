@@ -8,7 +8,7 @@ module.exports = {
         {
           id: 1,
           userId: 1,
-          name: "Chia",
+          name: "chia",
           minimum_bid: 1,
           description: "Catch the bad dreams!",
           date_end: new Date(),
@@ -20,7 +20,7 @@ module.exports = {
         {
           id: 2,
           userId: 1,
-          name: "Tokyo at Night - Shimbashi",
+          name: "tokyo at night - shimbashi",
           minimum_bid: 57.51,
           description:
             "Night photography of Shimbashi, bar district in Tokyo, after the rain.",
@@ -32,7 +32,7 @@ module.exports = {
         {
           id: 3,
           userId: 1,
-          name: "Terrarium world",
+          name: "terrarium world",
           minimum_bid: 57.51,
           description:
             "Rather than just picking out an individual plant, consider gifting an entire tabletop garden — suitable for both those with and without experience with plants.",
