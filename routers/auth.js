@@ -10,8 +10,8 @@ const router = new Router();
 
 router.post("/login", async (req, res, next) => {
   try {
-    const { email, password } = req.body;
-
+    let { email, password } = req.body;
+    email = email.toLowerCase();
     if (!email || !password) {
       return res
         .status(400)
@@ -36,8 +36,8 @@ router.post("/login", async (req, res, next) => {
 });
 
 router.post("/signup", async (req, res) => {
-  const { displayName, password, email } = req.body;
-
+  let { displayName, password, email } = req.body;
+  email = email.toLowerCase();
   if (!email || !password || !displayName) {
     return res.status(400).send("Please fill in all ");
   }
