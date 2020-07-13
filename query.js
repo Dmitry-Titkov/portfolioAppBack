@@ -106,10 +106,11 @@ async function UsersAuctions(id) {
 module.exports.UsersAuctions = UsersAuctions;
 
 async function retrieveItem(name) {
+  var lowerCaseName = name.toLowerCase();
   var options = {
     where: {
       name: {
-        [Op.like]: "%" + name + "%",
+        [Op.like]: "%" + lowerCaseName + "%",
       },
     },
     include: BidModel,
